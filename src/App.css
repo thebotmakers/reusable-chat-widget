@@ -27,15 +27,16 @@
   to { transform: rotate(360deg); }
 }
 
-.avatar-circle {
-  background-image: url("./img/avatar.png");
+
+.widget .avatar-circle {
+  background-image: url(/static/media/avatar.a88c1d3e.png);
   background-size: contain;
 }
 
-.header-color {
-  background:#4598E4;
+.widget .header-color {
+  background: #4598e4;
 }
 
-.widget-circle, .send {
-  color:#4598E4;
+.widget .send, .widget.widget-circle {
+  color: #4598e4;
 }
