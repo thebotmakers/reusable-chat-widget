@@ -29,7 +29,7 @@
 
 
 .widget .avatar-circle {
-  background-image: url(/static/media/avatar.a88c1d3e.png);
+  background-image: url('./img/avatar.png');
   background-size: contain;
 }
 

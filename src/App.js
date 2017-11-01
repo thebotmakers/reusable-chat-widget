@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { DirectLine } from 'botframework-directlinejs';
-import update from 'immutability-helper';
-import { Widget, MessageModel } from '@botsfactory/chat-widget'
+import { Widget, MessageModel } from '@botsfactory/chat-widget';
+import axios from 'axios';
+
 import './App.css';
+
+const url = 'https://regular-twine.glitch.me/widget';
 
 class App extends Component {
 
@@ -19,47 +21,23 @@ class App extends Component {
       }
   }
 
-  componentDidMount() {
-
-    this.directLine = new DirectLine({
-      secret: 'y3254-14TgQ.cwA.7aU.bB4PQHSE_wYBdKf6ddMqBdWQVCb0ZOOUeMFD3ywDshE'
-    });
-
-    this.directLine.activity$
-      .filter(activity => activity.type === 'message')
-      .subscribe(message => {
-
-        if (message.from.id !== this.state.user.id) {
-          const model = new MessageModel({ from: message.from.id, id: message.id, text: message.text, sent: true })
-          this.setState({ messages: this.state.messages.concat([model]) });
-        }
-      });
-  }
-
   handleMessageEnter = (e) => {
 
-    const message = new MessageModel({ from: this.state.user.id, id: Date.now().toString(), text: e.value, sent: false });
+    const message = new MessageModel({ from: this.state.user.id, id: Date.now().toString(), text: e.value, sent: true });
 
     this.setState({ messages: this.state.messages.concat([message]) });
 
-    // TODO: this doens't work because of a bug in chrome debugger
-    const self = this;
+    axios.post(url, JSON.stringify(message))
 
-    this.directLine.postActivity({
-      from: { id: this.state.user.id, name: this.state.user.name },
-      type: 'message',
-      text: e.value
-    }).subscribe(
-      id => {
+      .then((response) => {
+        console.log(response);
 
-        const index = self.state.messages.findIndex(m => m.id === message.id);
-        const messages = update(self.state.messages, { [index]: { id: { $set: id }, sent: { $set: true } } });
+        const model = new MessageModel({ from: response.from.id, id: response.id, text: response.text, sent: true })
+        this.setState({ messages: this.state.messages.concat([model]) });
+      })
 
-        self.setState({ messages });
-      },
-      error => {
-
-        console.log("Error posting activity", error)
+      .catch((error) => {
+        console.log("Error posting activity", error);
       });
   }
 
