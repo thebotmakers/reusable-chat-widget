@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Widget, MessageModel } from '@botsfactory/chat-widget';
 import axios from 'axios';
-
 import './App.css';
+const cuid = require('cuid');
 
-const url = 'https://regular-twine.glitch.me/widget';
+const url = 'https://higuidebot.herokuapp.com/widgetWebhook';
 
 class App extends Component {
 
@@ -23,16 +23,16 @@ class App extends Component {
 
   handleMessageEnter = (e) => {
 
-    const message = new MessageModel({ from: this.state.user.id, id: Date.now().toString(), text: e.value, sent: true });
+    const message = new MessageModel({ from: this.state.user.id, id: cuid(), text: e.value, sent: true });
 
     this.setState({ messages: this.state.messages.concat([message]) });
 
-    axios.post(url, JSON.stringify(message))
+    axios.post(url, message)
 
       .then((response) => {
         console.log(response);
 
-        const model = new MessageModel({ from: response.from.id, id: response.id, text: response.text, sent: true })
+        const model = new MessageModel({ from: response.data.from, id: response.data.id, text: response.data.responseText, sent: true })
         this.setState({ messages: this.state.messages.concat([model]) });
       })
 
