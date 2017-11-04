@@ -23,6 +23,7 @@ To get a Chat Widget env running in your website follow this steps:
 ```bash
 $ yarn build
 ```
+(This repository contains the `build` folder but run the last command if you update the code to get the last version.)
 
 2. Copy the generated `build` folder to your project (inside the 'public' folder)
 
