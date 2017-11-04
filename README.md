@@ -36,6 +36,7 @@ $ yarn build
   <link href="/widgetBuild/static/css/main.c871f12f.css" rel="stylesheet">
 
 ```
+(`widgetBuild` is the build folder generated.)
 
 4. Add the widget:
 
