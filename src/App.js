@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Widget, MessageModel } from '@botsfactory/chat-widget';
+import { Widget, MessageModel } from './widget';
 import axios from 'axios';
 import './App.css';
 const cuid = require('cuid');
 
-const url = 'https://higuidebot.herokuapp.com/widgetWebhook';
+const url = 'http://localhost:8989/api/getQuickReply'; //'https://higuidebot.herokuapp.com/widgetWebhook';
 
 class App extends Component {
 
@@ -23,16 +23,24 @@ class App extends Component {
 
   handleMessageEnter = (e) => {
 
-    const message = new MessageModel({ from: this.state.user.id, id: cuid(), text: e.value, sent: true });
+    const message = new MessageModel({ from: this.state.user.id, id: cuid(), text: e.value, type: 'text', sent: true });
 
     this.setState({ messages: this.state.messages.concat([message]) });
 
-    axios.post(url, message)
+    //axios.post(url, message)
+
+    axios.post(url)
 
       .then((response) => {
-        console.log(response);
+        const model = new MessageModel({
+          from: response.data.from,
+          id: response.data.id,
+          text: response.data.message.text,
+          type: 'quickreply',
+          quick_replies: response.data.message.quick_replies,
+          sent: true
+        })
 
-        const model = new MessageModel({ from: response.data.from, id: response.data.id, text: response.data.responseText, sent: true })
         this.setState({ messages: this.state.messages.concat([model]) });
       })
 
