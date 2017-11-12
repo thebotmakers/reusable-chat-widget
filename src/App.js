@@ -4,7 +4,7 @@ import axios from 'axios';
 import './App.css';
 const cuid = require('cuid');
 
-const url = 'http://localhost:8989/api/getQuickReply'; //'https://higuidebot.herokuapp.com/widgetWebhook';
+const url = 'https://higuidebot.herokuapp.com/widgetWebhook';
 
 class App extends Component {
 
@@ -27,17 +27,15 @@ class App extends Component {
 
     this.setState({ messages: this.state.messages.concat([message]) });
 
-    //axios.post(url, message)
-
-    axios.post(url)
+    axios.post(url, { "siteID": 1 })
 
       .then((response) => {
         const model = new MessageModel({
           from: response.data.from,
           id: response.data.id,
-          text: response.data.message.text,
+          text: response.data.responseText.text,
           type: 'quickreply',
-          quick_replies: response.data.message.quick_replies,
+          quick_replies: response.data.responseText.quick_replies,
           sent: true
         })
 

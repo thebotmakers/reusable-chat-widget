@@ -10,15 +10,26 @@ const Container = styled.div`
   transition: left 500ms ease-out;
   white-space: nowrap;
 `
+
+const Wrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+`
+
+const Buttons = styled.div`
+
+`
+
 const Text = styled.div`
-  border-radius: 25px;
-  font-size: 14px;
-  font-weight: normal;
-  margin: 4px 0px;
-  padding: 8px 18px;
-  line-height: 1.4;
-  background: #D8D8D8;
-  color: #2B2B2B;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: normal;
+    margin: 4px 0px;
+    padding: 8px 18px;
+    line-height: 1.4;
+    opacity: ${props => props.sent ? 1 : .7};
+    background: #D8D8D8;
+    color: #2B2B2B;
 `
 
 export default class QuickReplies extends Component {
@@ -30,10 +41,14 @@ export default class QuickReplies extends Component {
         );
 
         return (
-            <Container className="quickreplies" >
-                <Text>{this.props.message.text}</Text>
-                <div>{buttons}</div>
-            </Container>
+            <div>
+                <Wrapper>
+                    <Text>{this.props.message.text}</Text>
+                </Wrapper>
+                <Container className="quickreplies" >
+                    <Buttons>{buttons}</Buttons>
+                </Container>
+            </div>
         )
     }
 }

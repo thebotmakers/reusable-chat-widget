@@ -46,7 +46,7 @@ export default class Input extends Component {
 
   send() {
 
-    if (this.state.value != '') {
+    if (this.state.value !== '') {
       this.props.onMessageEnter(this.state);
       this.setState({ value: '' });
       this.input.value = '';
@@ -61,7 +61,7 @@ export default class Input extends Component {
 
   onKeyDown = (e) => {
 
-    if (e.keyCode == 13) {
+    if (e.keyCode === 13) {
       this.send();
     }
   }
