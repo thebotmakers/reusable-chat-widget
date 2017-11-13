@@ -29,9 +29,18 @@ const Text = styled.div`
 
 export default class QuickReplyButton extends Component {
 
+  constructor(props) {
+    super(props);
+  }
+
+  onClickQuickReplyButton = (e) => {
+    //this.setState({ value: e.target.value });
+    this.props.onQuickReplyClick({ value: this.props.title });
+  }
+  1
   render() {
     return (
-      <Wrapper onClick={this.props.onQuickReplyClick}>
+      <Wrapper onClick={this.onClickQuickReplyButton}>
         <Img className='QuickReplyImg'>{this.props.image_url}</Img>
         <Text>{this.props.title}</Text>
       </Wrapper >
