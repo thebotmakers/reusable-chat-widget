@@ -47,11 +47,23 @@ class App extends Component {
       });
   }
 
+  handleQuickReplyClick = (e) => {
+
+    const message = new MessageModel({ from: this.state.user.id, id: cuid(), text: e.value, type: 'text', sent: true });
+
+    this.setState({ messages: this.state.messages.concat([message]) });
+  }
+
   render() {
 
     return (
       <div className="App">
-        <Widget messages={this.state.messages} user={this.state.user} onMessageEnter={this.handleMessageEnter} />
+        <Widget
+          messages={this.state.messages}
+          user={this.state.user}
+          onMessageEnter={this.handleMessageEnter}
+          onQuickReplyClick={this.handleQuickReplyClick}
+        />
       </div>
     );
   }

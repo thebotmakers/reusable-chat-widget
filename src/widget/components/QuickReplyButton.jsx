@@ -2,20 +2,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-
-/*
-const Button = styled.div`
-    background: #fff;
-  border-radius: 1.3em;
-    color: #0084ff;
-    display: inline-block;
-  align-items: center;
-  margin: 6px 4px;
-  height: 44px;
-  min-width: 44px;
-    border: 1px solid #0084ff;
-`
-*/
+import { MessageModel } from '../model/MessageModel';
 
 const Img = styled.div`
   background-size: contain;
@@ -24,6 +11,7 @@ const Img = styled.div`
 const Wrapper = styled.div`
     display: inline-block;
     flex-direction: row;
+    cursor: pointer;
 `
 
 const Text = styled.div`
@@ -43,7 +31,7 @@ export default class QuickReplyButton extends Component {
 
   render() {
     return (
-      <Wrapper>
+      <Wrapper onClick={this.props.onQuickReplyClick}>
         <Img className='QuickReplyImg'>{this.props.image_url}</Img>
         <Text>{this.props.title}</Text>
       </Wrapper >

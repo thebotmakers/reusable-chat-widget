@@ -41,11 +41,13 @@ export default class Conversation extends Component {
           {this.props.messages.map(message => {
 
             if (message.type === 'text') {
-              return <Bubble key={message.id} who={message.from === this.props.user.id ? "me" : "other"} sent={message.sent} > {message.text}</Bubble>
+              return <Bubble key={message.id} who={message.from === this.props.user.id ? "me" : "other"} sent={message.sent} >
+                {message.text}
+              </Bubble>
             }
 
             if (message.type === 'quickreply') {
-              return <QuickReplies key={message.id} message={message} />
+              return <QuickReplies key={message.id} message={message} onQuickReplyClick={this.props.onQuickReplyClick} />
             }
           })}
         </ScrollWrapper>

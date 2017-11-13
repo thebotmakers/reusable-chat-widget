@@ -37,7 +37,12 @@ export default class QuickReplies extends Component {
     render() {
 
         const buttons = this.props.message.quick_replies.map((button) =>
-            <QuickReplyButton key={button.title.replace(' ', '_')} title={button.title} image_url={button.image_url} />
+            <QuickReplyButton
+                key={button.title.replace(' ', '_')}
+                title={button.title}
+                image_url={button.image_url}
+                onQuickReplyClick={this.props.onQuickReplyClick}
+            />
         );
 
         return (
@@ -46,7 +51,9 @@ export default class QuickReplies extends Component {
                     <Text>{this.props.message.text}</Text>
                 </Wrapper>
                 <Container className="quickreplies" >
-                    <Buttons>{buttons}</Buttons>
+                    <Buttons>
+                        {buttons}
+                    </Buttons>
                 </Container>
             </div>
         )
@@ -54,5 +61,5 @@ export default class QuickReplies extends Component {
 }
 
 QuickReplies.propTypes = {
-    buttons: PropTypes.array.isRequired
+    //buttons: PropTypes.array.isRequired
 }
