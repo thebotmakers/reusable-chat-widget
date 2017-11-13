@@ -27,17 +27,33 @@ class App extends Component {
 
     this.setState({ messages: this.state.messages.concat([message]) });
 
-    axios.post(url, { "siteID": 1 })
+    axios.post(url, message)
 
       .then((response) => {
-        const model = new MessageModel({
-          from: response.data.from,
-          id: response.data.id,
-          text: response.data.responseText.text,
-          type: 'quickreply',
-          quick_replies: response.data.responseText.quick_replies,
-          sent: true
-        })
+
+        let model;
+
+        if (typeof response.data.responseText === 'string') {
+
+          model = new MessageModel({
+            from: response.data.from,
+            id: response.data.id,
+            text: response.data.responseText,
+            type: 'text',
+            sent: true
+          });
+
+        } else if (response.data.responseText.quick_replies) {
+
+          model = new MessageModel({
+            from: response.data.from,
+            id: response.data.id,
+            text: response.data.responseText.text,
+            type: 'quickreply',
+            quick_replies: response.data.responseText.quick_replies,
+            sent: true
+          });
+        }
 
         this.setState({ messages: this.state.messages.concat([model]) });
       })

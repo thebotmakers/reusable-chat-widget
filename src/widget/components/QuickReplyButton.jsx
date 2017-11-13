@@ -34,7 +34,6 @@ export default class QuickReplyButton extends Component {
   }
 
   onClickQuickReplyButton = (e) => {
-    //this.setState({ value: e.target.value });
     this.props.onQuickReplyClick({ value: this.props.title });
   }
   1
